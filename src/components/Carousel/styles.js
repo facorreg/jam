@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Carousel = styled.div`
+const CarouselStyle = styled.div`
   grid-column: auto / span 3;
   width: 100%;
   overflow: hidden;
@@ -8,7 +8,7 @@ export const Carousel = styled.div`
   padding: 60px 0 20px 0;
 `;
 
-export const Background = styled.div`
+const Background = styled.div`
   overflow: hidden;
   background-size: cover;
   background-position: center;
@@ -16,3 +16,5 @@ export const Background = styled.div`
   height: 350px;
   max-width: 100%;
 `;
+
+export { CarouselStyle, Background };

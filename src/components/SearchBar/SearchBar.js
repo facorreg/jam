@@ -14,7 +14,7 @@ const SearchBar = styled.div`
   width: 30vw;
   margin: 10px 0;
   position: relative;
-`
+`;
 
 const SearchInput = styled.input`
   width: 100%;
@@ -45,7 +45,7 @@ const StyledSearchBar = () => (
     <SearchBar>
       <SearchInput type="text" placeholder="search" />
       <SearchButton>
-        <img src="/search.png"/>
+        <img src="/search.png" alt="magnifying glass" />
       </SearchButton>
     </SearchBar>
   </SearchBarContainer>
