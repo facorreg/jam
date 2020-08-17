@@ -1,4 +1,4 @@
 import fetchCarouselData from './fetchCarouselData';
+import fetchProductsData from './fetchProductsData';
 
-// eslint-disable-next-line import/prefer-default-export
-export { fetchCarouselData };
+export { fetchCarouselData, fetchProductsData };

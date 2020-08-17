@@ -1,11 +1,14 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
-import client from '../apollo/apolloClient';
+import { useApollo } from '../apollo/apolloClient';
 import App from '../components/pages/App';
 
 function MyApp(props) {
+  // eslint-disable-next-line
+  const apolloClient = useApollo(props.initialApolloState);
+
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={apolloClient}>
       <App {...props} />
     </ApolloProvider>
   );

@@ -1,9 +1,12 @@
 import isArray from 'lodash/isArray';
-import { fetchCarouselData } from './singleStaticProps';
+import { fetchCarouselData, fetchProductsData } from './singleStaticProps';
+
+// staticPropsArray: [ft() => Promise]
 
 const paths = [{
-  path: ['/', '/home'],
-  staticPropsArray: [fetchCarouselData],
+  path: ['/'],
+  staticPropsArray: [fetchCarouselData, fetchProductsData],
+  options: { revalidate: 1 },
 }];
 
 /*
@@ -11,21 +14,22 @@ const paths = [{
   handled by the components
 */
 
-const resolve = (data) => Promise.resolve({
+const resolve = (data, options = {}) => Promise.resolve({
   props: data instanceof Error
     ? { error: data.reason || data.message }
     : data,
+  ...options,
 });
 
-const buildStaticProps = async (staticPropsArray) => {
+const buildStaticProps = async (staticPropsArray, options) => {
   try {
     const staticPropsPromises = await Promise.all(staticPropsArray.map((ft) => ft()));
     const staticProps = staticPropsPromises
       .reduce((allProps, currentProps) => ({ ...allProps, ...currentProps }), {});
 
-    return resolve(staticProps);
+    return resolve(staticProps, options);
   } catch (error) {
-    return resolve(error);
+    return resolve(error, options);
   }
 };
 
@@ -35,11 +39,11 @@ const getStaticPropsArrayGetter = (pathname) => ({ path }) => (
 
 const getStaticPropsUniversal = (pathname) => async () => {
   const getStaticPropsArray = getStaticPropsArrayGetter(pathname);
-  const { staticPropsArray } = paths.find(getStaticPropsArray) || {};
+  const { staticPropsArray, options } = paths.find(getStaticPropsArray) || {};
 
   if (!staticPropsArray || !staticPropsArray.length) return Promise.resolve({});
 
-  return buildStaticProps(staticPropsArray);
+  return buildStaticProps(staticPropsArray, options);
 };
 
 export default getStaticPropsUniversal;

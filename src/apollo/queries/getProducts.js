@@ -6,6 +6,11 @@ const getProductsQuery = gql`
       product_id
       product_name
       price
+      product_img_url
+      product_brand
+      description
+      promotions
+      product_type
     }
   }`;
 

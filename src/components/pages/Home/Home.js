@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import SearchBar from '../../SearchBar';
 import Carousel from '../../Carousel';
 import HomeStyle from './styles';
+import ProductList from '../../ProductList';
 
 const Home = (props) => (
   <HomeStyle>
     <SearchBar />
     <Carousel {...props} />
+    <ProductList />
   </HomeStyle>
 );
 
