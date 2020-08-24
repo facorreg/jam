@@ -1,61 +1,50 @@
-import React from 'react';
-import styled from 'styled-components';
-import get from 'lodash/get';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
+import ProductListStyle from './styles';
 import { getProducts } from '../../apollo/queries';
+import { objectListKeysToCamelCase } from '../../utils';
+import { useScrollHandler } from '../../ownHooks';
+import Product from '../Product';
 
 /*
-  @todo: actual products
-  move style elsewhere
-  handle products properly
+  @todo: add a loading effect
+    check whether there are still things to load
+    optimize pictures with next
 */
 
-const List = styled.div`
-  display: grid;
-  grid-template-columns: 5% 90% 5%;
-  width: 100vw;
-  margin: 40px 0px;
-
-  & .productListContainer {
-    min-height: auto;
-    border: 1px solid black;
-    grid-column: 2;
-    display: flex;
-    ${'' /* flex-direction: row; */}
-    flex-wrap: wrap;
-    justify-content: space-between;
-
-    & .product {
-      width: 250px;
-      height: 250px;
-      text-align: center;
-      border: 1px solid red;
-      margin: 10px;
-    }
-  }
-`;
-
-// const Product = (props) => (
-//   <>
-//     {
-//       props.products.map(({ product_name: productName }) => <div className>{productName}</div>)
-//     }
-//   </>
-// );
-
 const ProductList = () => {
-  const data = useQuery(getProducts, { variables: { limit: 10 } });
+  const {
+    data = {}, fetchMore, loading, error,
+  } = useQuery(getProducts);
+  const [nbProductsToDisplay, setNbProductsToDisplay] = useState(20);
+  const products = objectListKeysToCamelCase(data.products ?? [], ['__typename']);
 
-  if (!(get(data, 'data.products', []).length)) return <></>;
+  // use isLoadingMpre to handle onscroll loading div
+  // eslint-disable-next-line no-unused-vars
+  const isLoadingMore = useScrollHandler({
+    nbProductsToDisplay,
+    productsLength: products.length,
+    productLimit: 20,
+    fetchMore,
+    setNbProductsToDisplay,
+  });
+
+  if (loading) return <>Loading</>;
+  if (error) return <>Error</>;
+  if (!products.length) return <>No product to display</>;
+
+  const productsToDisplay = products.splice(0, nbProductsToDisplay);
 
   return (
-    <List>
-      <div className="productListContainer">
-        {
-          data.data.products.map(({ product_name: productName }) => <div className="product">{productName}</div>)
-        }
-      </div>
-    </List>
+    <ProductListStyle>
+      { typeof window !== 'undefined'
+        ? (
+          <div className="productListContainer">
+            {productsToDisplay.map((p) => <Product product={p} key={p.productId} />)}
+          </div>
+        )
+        : null }
+    </ProductListStyle>
   );
 };
 

@@ -1,4 +1,8 @@
 import getEnv from './getEnv';
+import { objectKeysToCamelCase, objectListKeysToCamelCase } from './objectKeysToCamelCase';
 
-// eslint-disable-next-line import/prefer-default-export
-export { getEnv };
+export {
+  getEnv,
+  objectKeysToCamelCase,
+  objectListKeysToCamelCase,
+};
