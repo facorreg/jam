@@ -3,12 +3,10 @@
 */
 import React from 'react';
 import Home from '../components/pages/Home';
-import getStaticPropsUniversal from '../staticProps';
+import getStaticUniversal from '../static';
 
-const Index = (props) => (
-  <><Home {...props} /></>
-);
+const Index = (props) => <Home {...props} />;
 
-export const getStaticProps = getStaticPropsUniversal('/');
+export const getStaticProps = getStaticUniversal({ pathName: '/' });
 
 export default Index;

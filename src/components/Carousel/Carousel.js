@@ -29,7 +29,7 @@ const Carousel = (props) => {
   ));
 
   return (
-    <CarouselStyle>
+    <CarouselStyle id="carousel">
       <Slider {...carouselSettings}>
         {CarouselContent}
       </Slider>

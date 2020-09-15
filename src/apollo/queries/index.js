@@ -1,4 +1,4 @@
 import getProducts from './getProducts';
+import getProductById from './getProductById';
 
-// eslint-disable-next-line import/prefer-default-export
-export { getProducts };
+export { getProducts, getProductById };

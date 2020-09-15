@@ -1,9 +1,9 @@
 import React from 'react';
-import { LogoContainer, LogoStyle } from './styles';
+import LogoContainer from './styles';
 
 const Logo = () => (
-  <LogoContainer>
-    <LogoStyle src="/logo.png" />
+  <LogoContainer id="logo">
+    <img src="/logo.png" alt="logo" />
   </LogoContainer>
 );
 

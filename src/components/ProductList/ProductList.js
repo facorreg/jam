@@ -4,7 +4,7 @@ import ProductListStyle from './styles';
 import { getProducts } from '../../apollo/queries';
 import { objectListKeysToCamelCase } from '../../utils';
 import { useScrollHandler } from '../../ownHooks';
-import Product from '../Product';
+import ProductItem from '../ProductItem';
 
 /*
   @todo: add a loading effect
@@ -36,15 +36,15 @@ const ProductList = () => {
   const productsToDisplay = products.splice(0, nbProductsToDisplay);
 
   return (
-    <ProductListStyle>
+    <>
       { typeof window !== 'undefined'
         ? (
-          <div className="productListContainer">
-            {productsToDisplay.map((p) => <Product product={p} key={p.productId} />)}
-          </div>
+          <ProductListStyle id="productList">
+            {productsToDisplay.map((p) => <ProductItem product={p} key={p.productId} />)}
+          </ProductListStyle>
         )
-        : null }
-    </ProductListStyle>
+        : null}
+    </>
   );
 };
 

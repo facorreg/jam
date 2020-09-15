@@ -1,15 +1,13 @@
 import styled from 'styled-components';
 
 const LogoContainer = styled.div`
-  grid-row: 1;
-  grid-column: 1;
-  height: 100%;
   background: transparent;
-  padding: 15px 0 0 20px;
+  margin: 0 0 0 20px;
+  height: 100%;
+
+  img {
+    height: 100%;
+  }
 `;
 
-const LogoStyle = styled.img`
-  max-height: 75px;
-`;
-
-export { LogoContainer, LogoStyle };
+export default LogoContainer;

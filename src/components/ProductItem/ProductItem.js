@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import Proptypes from 'prop-types';
+import { useRouter } from 'next/router';
+import PromotionIndicator from '../PromotionIndicator';
+
 import {
   ProductStyle,
   BrandInfos,
   ImgContainer,
   ProductNameInfos,
   DescriptionsInfos,
-  Promotion,
-  PromotionContainer,
   PriceAndCartContainer,
   PriceContainerDiv,
   PriceDiv,
@@ -23,8 +24,9 @@ import {
   preload: https://github.com/cyrilwanner/next-optimized-images
 */
 
-const Product = ({
+const ProductItem = ({
   product: {
+    id,
     productName,
     price,
     productImgUrl,
@@ -35,17 +37,18 @@ const Product = ({
 }) => {
   const [imgLoaded, setLoadingStatus] = useState(false);
   const onload = () => setLoadingStatus(true);
+  const router = useRouter();
+
+  const handleClick = () => { router.push(`/product/${id}`); };
   return (
-    <ProductStyle className="product">
+    <ProductStyle className="product" onClick={handleClick}>
       <ImgContainer shouldDisplay={imgLoaded}>
         <img src={productImgUrl} onLoad={onload} alt="productImg" />
       </ImgContainer>
       <BrandInfos>{productBrand.toUpperCase()}</BrandInfos>
       <ProductNameInfos>{productName}</ProductNameInfos>
       <DescriptionsInfos>{description}</DescriptionsInfos>
-      <PromotionContainer>
-        <Promotion>{promotions ?? '-10%'}</Promotion>
-      </PromotionContainer>
+      <PromotionIndicator promoTag={promotions ?? '-10%'} />
       <PriceAndCartContainer>
         <PriceContainerDiv>
           <PriceDiv>{`${price} €`}</PriceDiv>
@@ -57,9 +60,9 @@ const Product = ({
   );
 };
 
-Product.propTypes = {
+ProductItem.propTypes = {
   product: Proptypes.shape({
-    // productId: Proptypes.string.isRequired,
+    id: Proptypes.string.isRequired,
     productName: Proptypes.string.isRequired,
     price: Proptypes.number.isRequired,
     productImgUrl: Proptypes.string.isRequired,
@@ -70,4 +73,4 @@ Product.propTypes = {
   }).isRequired,
 };
 
-export default Product;
+export default ProductItem;

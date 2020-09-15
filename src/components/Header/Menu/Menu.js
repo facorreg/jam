@@ -1,12 +1,12 @@
 import React from 'react';
-import { MenuButton, MenuStyle } from './styles';
+import MenuStyle from './styles';
 
 const Menu = () => (
-  <MenuStyle>
-    <MenuButton>SIGN UP</MenuButton>
-    <MenuButton>LOGIN</MenuButton>
-    <MenuButton>PROMOTIONS</MenuButton>
-    <MenuButton>ABOUT US</MenuButton>
+  <MenuStyle id="menu">
+    <div className="menuButton">SIGN UP</div>
+    <div className="menuButton">LOGIN</div>
+    <div className="menuButton">PROMOTIONS</div>
+    <div className="menuButton">ABOUT US</div>
   </MenuStyle>
 );
 
