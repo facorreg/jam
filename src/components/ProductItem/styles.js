@@ -16,8 +16,8 @@ const ImgContainer = styled.div`
   min-height: 204px;
   height: auto;
   width: calc(100% - 28px);
-  ${'' /* background: ${(props) => (props.shouldDisplay ? 'transparent' : 'rgba(51, 51, 51, .2)')}; */}
-
+  cursor: pointer;
+  
   img {
     width: 100%;
     height: auto;

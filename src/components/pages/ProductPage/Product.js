@@ -22,7 +22,7 @@ const ProductPage = ({ product }) => {
         <div className="productPromo">-10%</div>
         <div className="productPrice">{`${price} €`}</div>
         <div className="productDescr">
-          {`Le paquet de 500g ${price * 2} € / L`}
+          {`Le paquet de 500g ${price * 2} € / Kg`}
         </div>
         <div className="addToCart">Ajouter au panier</div>
       </div>

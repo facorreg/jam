@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import Head from '../../Head';
 import Header from '../../Header';
 import { GlobalStyle, AppStyle } from './styles';
+import Modal from '../../Modal';
 
 const App = ({ Component, pageProps }) => (
-  <AppStyle>
-    <GlobalStyle />
-    <Head />
-    <Header />
-    <Component {...pageProps} />
-  </AppStyle>
+  <Modal>
+    <AppStyle>
+      <GlobalStyle />
+      <Head />
+      <Header />
+      <Component {...pageProps} />
+    </AppStyle>
+  </Modal>
 );
 
 App.propTypes = {

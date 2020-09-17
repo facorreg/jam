@@ -7,6 +7,6 @@ import getStaticUniversal from '../static';
 
 const Index = (props) => <Home {...props} />;
 
-export const getStaticProps = getStaticUniversal({ pathName: '/' });
+export const getStaticProps = getStaticUniversal({ pathname: '/' });
 
 export default Index;

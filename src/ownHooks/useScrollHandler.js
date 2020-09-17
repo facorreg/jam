@@ -3,7 +3,12 @@ import useEventListener from './useEventListener';
 
 const isBottomPage = () => {
   const scrollOffset = Math.trunc(window.innerHeight + document.documentElement.scrollTop);
-  return scrollOffset === document.documentElement.offsetHeight;
+  /*
+    -10 because there were cases where scroll offset would be equal to
+      documentElement.offsetHeight - 1, hence making it impossible to
+      scroll down.
+  */
+  return scrollOffset >= (document.documentElement.offsetHeight - 10);
 };
 
 const setLoadMoreProducts = ({
@@ -27,6 +32,7 @@ const setLoadMoreProducts = ({
       },
     }).finally(() => setIsLoadingMore(false));
   }
+
   setNbProductsToDisplay(nbProductsToDisplay + productLimit);
 };
 

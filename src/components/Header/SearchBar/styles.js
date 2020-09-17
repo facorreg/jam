@@ -27,7 +27,6 @@ const SearchBarContainer = styled.div`
     background: transparent;
     border: none;
     cursor: pointer;
-    z-index: 2;
     outline: none;
 
     img {

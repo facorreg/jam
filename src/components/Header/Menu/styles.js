@@ -5,6 +5,13 @@ const MenuStyle = styled.div`
   flex-direction: row-reverse;
 
   .menuButton {
+    background: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    font-weight: normal;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    border: none;
     height: 100%;
     width: auto;
     margin: 0px 20px;

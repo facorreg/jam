@@ -41,8 +41,8 @@ const ProductItem = ({
 
   const handleClick = () => { router.push(`/product/${id}`); };
   return (
-    <ProductStyle className="product" onClick={handleClick}>
-      <ImgContainer shouldDisplay={imgLoaded}>
+    <ProductStyle className="product">
+      <ImgContainer shouldDisplay={imgLoaded} onClick={handleClick}>
         <img src={productImgUrl} onLoad={onload} alt="productImg" />
       </ImgContainer>
       <BrandInfos>{productBrand.toUpperCase()}</BrandInfos>

@@ -70,7 +70,7 @@ const ProductPageStyle = styled.div`
       font-size: 1.3em;
       width: 70px;
       text-align: center;
-      margin-left: 15px;
+      ${'' /* margin-left: 15px; */}
     }
     
     > .productPrice {
