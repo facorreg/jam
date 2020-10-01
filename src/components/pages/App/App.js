@@ -4,16 +4,17 @@ import Head from '../../Head';
 import Header from '../../Header';
 import { GlobalStyle, AppStyle } from './styles';
 import Modal from '../../Modal';
+// import ModalContext from '../../../context';
 
 const App = ({ Component, pageProps }) => (
-  <Modal>
-    <AppStyle>
+  <AppStyle>
+    <Modal>
       <GlobalStyle />
       <Head />
       <Header />
       <Component {...pageProps} />
-    </AppStyle>
-  </Modal>
+    </Modal>
+  </AppStyle>
 );
 
 App.propTypes = {

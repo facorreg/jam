@@ -1,9 +1,10 @@
-import React, { createContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
-import LoginModal from '../LoginModal';
+import PropTypes from 'prop-types';
 import StyledModalComp from './style';
 // eslint-disable-next-line import/no-cycle
+import ModalContext from '../../context';
+import LoginModal from '../LoginModal';
 import SignupModal from '../SignupModal';
 
 const customStyles = {
@@ -17,24 +18,17 @@ const customStyles = {
   },
 };
 
-export const ModalContext = createContext();
-const { Provider } = ModalContext;
-
 const ModalComp = ({ children }) => {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  const [Form, setForm] = React.useState(null);
   useEffect(() => (
     Modal.setAppElement('body')
   ));
 
-  const modalSchema = {
-    login: LoginModal,
-    signup: SignupModal,
-  };
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [modalName, setModalName] = React.useState('');
 
-  const openModal = (type) => {
+  const openModal = (newModalName) => {
+    setModalName(newModalName);
     setIsOpen(true);
-    setForm(modalSchema[type]);
   };
 
   const afterOpenModal = () => {
@@ -45,15 +39,10 @@ const ModalComp = ({ children }) => {
     setIsOpen(false);
   };
 
-  const providerData = {
-    openModal,
-    closeModal,
-  };
-
   return (
     <div>
       <Modal
-        isOpen={modalIsOpen}
+        isOpen={isOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
@@ -61,19 +50,26 @@ const ModalComp = ({ children }) => {
       >
         <StyledModalComp>
           <div className="modalForm">
-            {Form}
+            {
+              modalName === 'signup'
+                ? <SignupModal />
+                : <LoginModal />
+            }
           </div>
         </StyledModalComp>
       </Modal>
-      <Provider value={providerData}>
+      <ModalContext.Provider value={{
+        afterOpenModal, closeModal, isOpen, modalName, openModal,
+      }}
+      >
         {children}
-      </Provider>
+      </ModalContext.Provider>
     </div>
   );
 };
 
 ModalComp.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 export default ModalComp;

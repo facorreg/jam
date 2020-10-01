@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import ProductPageStyle from './style';
+import ProductPromo from '../../ProductPromo';
 
 const ProductPage = ({ product }) => {
   const {
@@ -19,7 +20,7 @@ const ProductPage = ({ product }) => {
         <img className="productImg" src={productImgUrl} alt="product" />
         <div className="productBrand">{productBrand.toUpperCase()}</div>
         <div className="productName">{productName}</div>
-        <div className="productPromo">-10%</div>
+        <ProductPromo cName="productPromo" promo={10} />
         <div className="productPrice">{`${price} €`}</div>
         <div className="productDescr">
           {`Le paquet de 500g ${price * 2} € / Kg`}

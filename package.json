@@ -24,6 +24,7 @@
     "react-modal": "^3.11.2",
     "react-slick": "^0.27.2-beta-1",
     "styled-components": "^5.1.1",
+    "universal-cookie": "^4.0.4",
     "uuid": "^8.3.0"
   },
   "devDependencies": {

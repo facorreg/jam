@@ -64,7 +64,11 @@ const StyledModalComp = styled.div`
   }
   input[type=submit]:hover {
     background: #16aa56;
-    animation-name: shake;
+  }
+  input[type=submit]:disabled {
+    background: #6D7781;
+    color: #fff;
+    cursor: not-allowed;
   }
 
   .forgot {
@@ -88,6 +92,28 @@ const StyledModalComp = styled.div`
     font-size: 12px;
     text-indent: 25px;
     line-height: 15px;
+  }
+
+  .modalError {
+    text-align: center;
+    background: indianred;
+    color: white;
+    border-bottom: none;
+    width: 350px;
+    min-height: 40px;
+    line-height: 40px;
+    transition: visibility 0.3s, opacity 0.3s linear;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .errorMessage {
+    width: 300px;
+  }
+
+  .hidden {
+    visibility: hidden;
+    opacity: 0;
   }
 
   ::-webkit-input-placeholder {

@@ -63,14 +63,8 @@ const ProductPageStyle = styled.div`
       grid-area: pname;
     }
     
-    > .productPromo {
+    .productPromo {
       grid-area: ppromo;
-      background: rgba(51, 51, 51, 1);
-      color: white;
-      font-size: 1.3em;
-      width: 70px;
-      text-align: center;
-      ${'' /* margin-left: 15px; */}
     }
     
     > .productPrice {
