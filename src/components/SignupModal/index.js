@@ -1,13 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { registerMutation } from '../../apollo/mutations';
-import { useGeneratedInputRefs } from '../../ownHooks';
-
-const promesify = (shouldResolve, msg) => {
-  if (shouldResolve) return Promise.resolve();
-  return Promise.reject(new Error(msg));
-};
+import React from 'react';
+import { useGeneratedInputRefs, useConnectionDataHandler } from '../../ownHooks';
+import { promesify } from '../../utils';
 
 const refsSchema = [{
   name: 'username',
@@ -17,35 +11,19 @@ const refsSchema = [{
   validator: (str) => promesify(str.length > 8, 'Your password must be at least 8 characters long'),
 }, {
   name: 'email',
-  validator: (str) => promesify(Boolean(str.match(/^[a-z]{4,}@[a-z]{2,}.[a-z]{3,5}$/), 'Invalid email')),
+  validator: (str) => promesify(Boolean(str.match(/^[a-z0-9]|\.|-|_{4,}@[a-z]{2,}.[a-z]{3,5}$/), 'Invalid email')),
 }, {
   name: 'checkbox',
   type: 'checkbox',
+  notGQL: true,
   validator: (checkbox) => promesify(checkbox, 'You must accept the terms and conditions to register'),
 }];
 
 const SignupModal = () => {
-  const { refs, validateAll, getAllInputs } = useGeneratedInputRefs(refsSchema, { noWhite: true });
-  const [register] = useMutation(registerMutation);
-  const [disabled, setDisabled] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [timeoutHandler, setTimeoutHandler] = useState(null);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setDisabled(true);
-    (async () => {
-      try {
-        await validateAll();
-        await register({ variables: { input: getAllInputs() } });
-      } catch (err) {
-        setDisabled(false);
-        setErrorMessage(err.message || 'something went wrong');
-        if (timeoutHandler) (clearTimeout(timeoutHandler));
-        setTimeoutHandler(setTimeout(() => setErrorMessage(''), 5000));
-      }
-    })();
-  };
+  const register = useConnectionDataHandler('register', 'Identifiers already taken');
+  const {
+    refs, handleSubmit, errorMessage, disabled,
+  } = useGeneratedInputRefs(refsSchema, register, { noWhite: true });
 
   return (
     <form>

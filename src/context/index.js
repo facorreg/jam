@@ -2,4 +2,5 @@ import React from 'react';
 
 const ModalContext = React.createContext();
 
-export default ModalContext;
+// eslint-disable-next-line import/prefer-default-export
+export { ModalContext };

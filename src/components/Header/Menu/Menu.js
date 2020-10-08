@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import MenuStyle from './styles';
-import ModalContext from '../../../context';
+import { ModalContext } from '../../../context';
 
 const Menu = () => {
   const { openModal } = useContext(ModalContext);

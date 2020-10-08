@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import StyledModalComp from './style';
 // eslint-disable-next-line import/no-cycle
-import ModalContext from '../../context';
+import { ModalContext } from '../../context';
 import LoginModal from '../LoginModal';
 import SignupModal from '../SignupModal';
 
@@ -40,7 +40,10 @@ const ModalComp = ({ children }) => {
   };
 
   return (
-    <div>
+    <ModalContext.Provider value={{
+      afterOpenModal, closeModal, isOpen, modalName, openModal,
+    }}
+    >
       <Modal
         isOpen={isOpen}
         onAfterOpen={afterOpenModal}
@@ -58,13 +61,8 @@ const ModalComp = ({ children }) => {
           </div>
         </StyledModalComp>
       </Modal>
-      <ModalContext.Provider value={{
-        afterOpenModal, closeModal, isOpen, modalName, openModal,
-      }}
-      >
-        {children}
-      </ModalContext.Provider>
-    </div>
+      {children}
+    </ModalContext.Provider>
   );
 };
 

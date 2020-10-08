@@ -1,8 +1,12 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
-const useGeneratedInputRefs = (schema, options = {}) => {
+const useGeneratedInputRefs = (schema, submitCallback, options = {}) => {
+  const [disabled, setDisabled] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [timeoutHandler, setTimeoutHandler] = useState(null);
+
   const onValidation = {
-    noWhite: (str) => (typeof str === 'string' ? str.replace(/\s+/, '') : ''),
+    noWhite: (str) => (typeof str === 'string' ? str.replace(/\s+/, '') : str),
     default: (str) => str,
   };
 
@@ -13,12 +17,13 @@ const useGeneratedInputRefs = (schema, options = {}) => {
         : acc), input);
 
   const refs = schema.reduce((acc, {
-    name, type, validator, ownOptions = {},
+    name, type, validator, ownOptions = {}, notGQL,
   }) => ({
     ...acc,
     [name]: {
       ref: useRef(''),
       middleWare: applyOptions({ ...options, ...ownOptions, default: true }),
+      isGQL: !notGQL,
       get refValue() { return this.ref.current[type === 'checkbox' ? 'checked' : 'value']; },
       get refValueUpdated() { return this.middleWare(this.refValue); },
       get validator() { return validator(this.refValueUpdated); },
@@ -26,16 +31,42 @@ const useGeneratedInputRefs = (schema, options = {}) => {
   }), {});
 
   const validateAll = () => Promise.all(Object.keys(refs).map((key) => refs[key].validator));
-  const getAllInputs = () => Object.keys(refs)
-    .reduce((acc, key) => ({
-      ...acc,
-      [key]: refs[key].refValue,
-    }), {});
+  const getAllInputs = (GQLOnly = true) => Object.keys(refs)
+    .reduce((acc, key) => (
+      GQLOnly && !refs[key].isGQL
+        ? acc
+        : {
+          ...acc,
+          [key]: refs[key].refValue,
+        }), {});
+
+  /*
+    NOTE: in a regular project, the handle submit part should be
+      created in yet another ownHook, for its code is really specific to the
+      modal forms components.
+  */
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setDisabled(true);
+    (async () => {
+      try {
+        await validateAll();
+        await submitCallback({ variables: { input: getAllInputs() } });
+      } catch (err) {
+        setDisabled(false);
+        setErrorMessage(err.message || 'something went wrong');
+        if (timeoutHandler) (clearTimeout(timeoutHandler));
+        setTimeoutHandler(setTimeout(() => setErrorMessage(''), 5000));
+      }
+    })();
+  };
 
   return {
     refs,
-    validateAll,
-    getAllInputs,
+    handleSubmit,
+    disabled,
+    errorMessage,
   };
 };
 
