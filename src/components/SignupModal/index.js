@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useGeneratedInputRefs, useConnectionDataHandler } from '../../ownHooks';
 import { promesify } from '../../utils';
 
@@ -19,8 +20,8 @@ const refsSchema = [{
   validator: (checkbox) => promesify(checkbox, 'You must accept the terms and conditions to register'),
 }];
 
-const SignupModal = () => {
-  const register = useConnectionDataHandler('register', 'Identifiers already taken');
+const SignupModal = ({ connectMe }) => {
+  const register = useConnectionDataHandler(connectMe, 'register', 'Identifiers already taken');
   const {
     refs, handleSubmit, errorMessage, disabled,
   } = useGeneratedInputRefs(refsSchema, register, { noWhite: true });
@@ -42,6 +43,10 @@ const SignupModal = () => {
       <input className="animated" type="submit" value="Register" onClick={handleSubmit} disabled={disabled} />
     </form>
   );
+};
+
+SignupModal.propTypes = {
+  connectMe: PropTypes.func.isRequired,
 };
 
 export default SignupModal;

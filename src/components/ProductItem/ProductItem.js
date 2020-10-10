@@ -1,24 +1,9 @@
 import React, { useState } from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import PromotionIndicator from '../PromotionIndicator';
-
-import {
-  ProductStyle,
-  BrandInfos,
-  ImgContainer,
-  ProductNameInfos,
-  DescriptionsInfos,
-  PriceAndCartContainer,
-  PriceContainerDiv,
-  PriceDiv,
-  PriceKgDiv,
-  CartButton,
-} from './styles';
-/*
-  @todo: actual products
-  handle products properly
-*/
+import ProductPromo from '../ProductPromo';
+import ProductStyle from './styles';
+import AddButton from '../AddButton';
 
 /*
   preload: https://github.com/cyrilwanner/next-optimized-images
@@ -27,10 +12,10 @@ import {
 const ProductItem = ({
   product: {
     id,
-    productName,
+    name,
     price,
-    productImgUrl,
-    productBrand,
+    images,
+    ref,
     description,
     promotions,
   },
@@ -38,38 +23,48 @@ const ProductItem = ({
   const [imgLoaded, setLoadingStatus] = useState(false);
   const onload = () => setLoadingStatus(true);
   const router = useRouter();
+  const { medium } = images;
 
   const handleClick = () => { router.push(`/product/${id}`); };
   return (
-    <ProductStyle className="product">
-      <ImgContainer shouldDisplay={imgLoaded} onClick={handleClick}>
-        <img src={productImgUrl} onLoad={onload} alt="productImg" />
-      </ImgContainer>
-      <BrandInfos>{productBrand.toUpperCase()}</BrandInfos>
-      <ProductNameInfos>{productName}</ProductNameInfos>
-      <DescriptionsInfos>{description}</DescriptionsInfos>
-      <PromotionIndicator promoTag={promotions ?? '-10%'} />
-      <PriceAndCartContainer>
-        <PriceContainerDiv>
-          <PriceDiv>{`${price} €`}</PriceDiv>
-          <PriceKgDiv>{`${price * 2} € / kg`}</PriceKgDiv>
-        </PriceContainerDiv>
-        <CartButton><img src="/cartBlack.png" alt="cart" /></CartButton>
-      </PriceAndCartContainer>
+    <ProductStyle className="product" shouldDisplay={imgLoaded}>
+      <button type="button" className="imgContainer" onClick={handleClick}>
+        <img src={medium} onLoad={onload} alt="productImg" />
+      </button>
+      <div className="brandInfo">{ref.toUpperCase()}</div>
+      <div className="productNameInfo">{name}</div>
+      <div className="descriptionInfo">{description}</div>
+      { promotions ? <ProductPromo cName="productPromo" promo={promotions} /> : null}
+      <div className="priceAndCartContainer">
+        <div className="priceContainer">
+          <div className="price">{`${price} €`}</div>
+          <div className="priceKg">{`${price * 2} € / kg`}</div>
+        </div>
+        <AddButton cName="cartButtonContainer" productId={id} />
+      </div>
     </ProductStyle>
   );
 };
 
+ProductItem.default = {
+  promotions: 0,
+};
+
 ProductItem.propTypes = {
-  product: Proptypes.shape({
-    id: Proptypes.string.isRequired,
-    productName: Proptypes.string.isRequired,
-    price: Proptypes.number.isRequired,
-    productImgUrl: Proptypes.string.isRequired,
-    productBrand: Proptypes.string.isRequired,
-    description: Proptypes.string.isRequired,
-    promotions: Proptypes.string,
-    // productId: Proptypes.string.isRequired,
+  product: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    images: PropTypes.shape({
+      thumbnail: PropTypes.string.isRequired,
+      large: PropTypes.string.isRequired,
+      medium: PropTypes.string.isRequired,
+      small: PropTypes.string.isRequired,
+      original: PropTypes.string.isRequired,
+    }),
+    ref: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    promotions: PropTypes.number,
   }).isRequired,
 };
 

@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+/*
+  @todo: handle with grid
+*/
+
 const ProductStyle = styled.div`
   display: flex;
   width: 300px;
@@ -9,108 +13,94 @@ const ProductStyle = styled.div`
   align-items: center;
   border: 2px solid rgba(51, 51, 51, .2);
   margin: 10px;
-`;
 
-const ImgContainer = styled.div`
-  margin: 14px;
-  min-height: 204px;
-  height: auto;
-  width: calc(100% - 28px);
-  cursor: pointer;
-  
-  img {
-    width: 100%;
+  .imgContainer {
+    margin: 14px;
+    min-height: 204px;
     height: auto;
-    display: ${(props) => (props.shouldDisplay ? 'block' : 'hidden')},
+    width: calc(100% - 28px);
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: ${(props) => (props.shouldDisplay ? 'block' : 'hidden')},
+    }
   }
-`;
 
-const TextInfos = styled.div`
-  margin: 0 14px;
-  text-overflow: ellipsis;
-  overflow: hidden; 
-  white-space: nowrap;
-  width: calc(100% - 28px);
-  align-self: flex-start;
-  text-align: left;
-`;
+  .brandInfo, .productNameInfo, .descriptionInfo {
+    margin: 0 14px;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    white-space: nowrap;
+    width: calc(100% - 28px);
+    align-self: flex-start;
+    text-align: left;
+  }
 
-const BrandInfos = styled(TextInfos)`
-  font-size: 20px;
-  min-height: calc(20px + 12px);
-`;
+  .brandInfo {
+    font-size: 20px;
+    min-height: calc(20px + 12px);
+  }
 
-const ProductNameInfos = styled(TextInfos)`
-  font-size: 15px;
-  min-height: calc(15px + 12px);
-  font-weight: bold;
-`;
+  .productNameInfo {
+    font-size: 15px;
+    min-height: calc(15px + 12px);
+    font-weight: bold;
+  }
 
-const DescriptionsInfos = styled(TextInfos)`
-  font-size: 12px;
-  min-height: calc(12px + 12px);
-`;
+  .descriptionInfo {
+    font-size: 12px;
+    min-height: calc(12px + 12px);
+  }
 
-const PriceAndCartContainer = styled.div`{
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-  padding-bottom: 10px;
-}`;
-
-const PriceContainerDiv = styled.div`{
-  height: 50px;
-  margin: 5px 14px;
-  align-self: flex-end;
-  display: flex;
-  flex-direction: column;
-
-  & div {
+  .priceAndCartContainer {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    flex: 1 1 auto;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    padding-bottom: 10px;
   }
-}`;
 
-const PriceDiv = styled.div`{
-  font-size: 25px;
-  font-weight: bold;
-  margin-bottom: 2px;
-}`;
+  .priceContainer {
+    height: 50px;
+    margin: 5px 14px;
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
 
-const PriceKgDiv = styled.div`{
-  font-size: 13px;
-  color: rgba(51, 51, 51, 1);
-}`;
-
-const CartButton = styled.button`{
-  height: 50px;
-  width: auto;
-  background: transparent;
-  margin: 5px 14px;
-  align-self: flex-end;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  
-  img {
-    height: 80%;
-    width: auto;
+    & div {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
   }
-}`;
 
-export {
-  ProductStyle,
-  ImgContainer,
-  TextInfos,
-  BrandInfos,
-  ProductNameInfos,
-  DescriptionsInfos,
-  PriceAndCartContainer,
-  PriceContainerDiv,
-  PriceDiv,
-  PriceKgDiv,
-  CartButton,
-};
+  .price {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+
+  .priceKg {
+    font-size: 13px;
+    color: rgba(51, 51, 51, 1);
+  }
+
+  .cartButtonContainer {
+    align-self: flex-end;
+    margin: 5px 14px;
+    height: 40px;
+  }
+
+  .cartButton {
+  }
+
+  .productPromo {
+    align-self: flex-start;
+    margin: 14px;
+  }
+`;
+
+export default ProductStyle;

@@ -30,7 +30,7 @@ const ProductList = () => {
   });
 
   if (loading) return <>Loading</>;
-  if (error) return <>Error</>;
+  if (error) { console.log(error); return <>Error</>; }
   if (!products.length) return <>No product to display</>;
 
   const productsToDisplay = products.splice(0, nbProductsToDisplay);
@@ -40,7 +40,7 @@ const ProductList = () => {
       { typeof window !== 'undefined'
         ? (
           <ProductListStyle id="productList">
-            {productsToDisplay.map((p) => <ProductItem product={p} key={p.productId} />)}
+            {productsToDisplay.map((p) => <ProductItem product={p} key={p.id} />)}
           </ProductListStyle>
         )
         : null}

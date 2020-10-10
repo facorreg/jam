@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useGeneratedInputRefs, useConnectionDataHandler } from '../../ownHooks';
 import { promesify } from '../../utils';
 
@@ -11,8 +12,8 @@ const refsSchema = [{
   validator: (str) => promesify(str.length, 'Please provide your password to login'),
 }];
 
-const LoginModal = () => {
-  const login = useConnectionDataHandler('login', 'Identifiers or password incorrect');
+const LoginModal = ({ connectMe }) => {
+  const login = useConnectionDataHandler(connectMe, 'login', 'Identifiers or password incorrect');
   const {
     refs, handleSubmit, errorMessage, disabled,
   } = useGeneratedInputRefs(refsSchema, login, { noWhite: true });
@@ -28,6 +29,10 @@ const LoginModal = () => {
       <input className="animated" type="submit" value="Register" onClick={handleSubmit} disabled={disabled} />
     </form>
   );
+};
+
+LoginModal.propTypes = {
+  connectMe: PropTypes.func.isRequired,
 };
 
 export default LoginModal;

@@ -1,17 +1,36 @@
 import { useMemo } from 'react';
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient, HttpLink, InMemoryCache, concat, ApolloLink, gql,
+} from '@apollo/client';
 import { concatPagination } from '@apollo/client/utilities';
-// import { getEnv } from '../utils';
+import { getCookie } from '../utils';
 
 let apolloClient;
 
 function createApolloClient() {
+  const httpLink = new HttpLink({
+    uri: 'http://localhost:1337/graphql', // Server URL (must be absolute)
+    // credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
+  });
+
+  const authMiddleWare = new ApolloLink((operation, forward) => {
+    // add the authorization to the headers
+    const { jwt } = getCookie('user', {});
+
+    if (jwt) {
+      operation.setContext({
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+    }
+
+    return forward(operation);
+  });
+
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: new HttpLink({
-      uri: 'http://localhost:1337/graphql', // Server URL (must be absolute)
-      // credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
-    }),
+    link: concat(authMiddleWare, httpLink),
     cache: new InMemoryCache({
       typePolicies: {
         Query: {
@@ -24,7 +43,7 @@ function createApolloClient() {
   });
 }
 
-export function initializeApollo(initialState = null) {
+export function initializeApollo(initialState) {
   const client = apolloClient ?? createApolloClient();
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state

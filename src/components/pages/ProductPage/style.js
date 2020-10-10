@@ -76,16 +76,8 @@ const ProductPageStyle = styled.div`
       grid-area: pDescr;
     }
 
-    > .addToCart {
-      border: 2px solid rgba(51, 51, 51, 1);
-      text-align: center;
-      height: 40px;
-      width: 200px;
+    > .textCartButtonContainer {
       grid-area: addToCart;
-      margin-bottom: 20px;
-      line-height: 40px;
-      cursor: pointer;
-      background: rgba(51, 51, 51, 0.02);
     }
   }
 

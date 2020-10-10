@@ -5,8 +5,8 @@ import App from '../components/pages/App';
 
 function MyApp(props) {
   // eslint-disable-next-line react/prop-types
-  const { pageProps: { initialApolloState } } = props;
-  const apolloClient = useApollo(initialApolloState);
+  // const { pageProps: { initialApolloState } } = props;
+  const apolloClient = useApollo();
 
   return (
     <ApolloProvider client={apolloClient}>

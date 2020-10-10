@@ -18,16 +18,25 @@ const customStyles = {
   },
 };
 
+const modalComponents = {
+  signup: SignupModal,
+  login: LoginModal,
+};
+
 const ModalComp = ({ children }) => {
   useEffect(() => (
     Modal.setAppElement('body')
   ));
 
   const [isOpen, setIsOpen] = React.useState(false);
-  const [modalName, setModalName] = React.useState('');
+  const [modalName, setModalName] = React.useState('login');
+  const [modalProps, setModalProps] = React.useState({});
 
-  const openModal = (newModalName) => {
+  const CurrentModal = modalComponents[modalName];
+
+  const openModal = (newModalName, childProps) => {
     setModalName(newModalName);
+    setModalProps(childProps);
     setIsOpen(true);
   };
 
@@ -41,7 +50,7 @@ const ModalComp = ({ children }) => {
 
   return (
     <ModalContext.Provider value={{
-      afterOpenModal, closeModal, isOpen, modalName, openModal,
+      afterOpenModal, closeModal, isOpen, openModal,
     }}
     >
       <Modal
@@ -53,11 +62,7 @@ const ModalComp = ({ children }) => {
       >
         <StyledModalComp>
           <div className="modalForm">
-            {
-              modalName === 'signup'
-                ? <SignupModal />
-                : <LoginModal />
-            }
+            <CurrentModal {...modalProps} />
           </div>
         </StyledModalComp>
       </Modal>

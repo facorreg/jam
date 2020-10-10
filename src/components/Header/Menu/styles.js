@@ -14,7 +14,7 @@ const MenuStyle = styled.div`
     border: none;
     height: 100%;
     width: auto;
-    margin: 0px 20px;
+    padding: 0px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,6 +22,18 @@ const MenuStyle = styled.div`
     letter-spacing: 3px;
     color: #202020;
     cursor: pointer;
+  }
+
+  .menuBorder {
+    height: 50%;
+    width: 60px;
+    padding-left: 20px;
+    border-left: 1px solid #202020;
+
+    img {
+      height: 100%;
+      width: auto;
+    }
   }
 `;
 
