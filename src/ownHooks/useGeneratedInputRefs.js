@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 
 const useGeneratedInputRefs = (schema, submitCallback, options = {}) => {
-  const [disabled, setDisabled] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [timeoutHandler, setTimeoutHandler] = useState(null);
 
@@ -48,13 +47,11 @@ const useGeneratedInputRefs = (schema, submitCallback, options = {}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setDisabled(true);
     (async () => {
       try {
         await validateAll();
         await submitCallback({ variables: { input: getAllInputs() } });
       } catch (err) {
-        setDisabled(false);
         setErrorMessage(err.message || 'something went wrong');
         if (timeoutHandler) (clearTimeout(timeoutHandler));
         setTimeoutHandler(setTimeout(() => setErrorMessage(''), 5000));
@@ -65,7 +62,6 @@ const useGeneratedInputRefs = (schema, submitCallback, options = {}) => {
   return {
     refs,
     handleSubmit,
-    disabled,
     errorMessage,
   };
 };

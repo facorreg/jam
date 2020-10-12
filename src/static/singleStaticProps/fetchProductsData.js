@@ -1,5 +1,5 @@
 import { getProducts } from '../../apollo/queries';
-import { initializeApollo } from '../../apollo/apolloClient';
+import { initializeApollo } from '../../apollo';
 
 const fetchProductsData = async (variables = { limit: 100 }) => {
   const apolloClient = initializeApollo();

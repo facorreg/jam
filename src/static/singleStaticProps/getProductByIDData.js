@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import { initializeApollo } from '../../apollo/apolloClient';
+import { initializeApollo } from '../../apollo';
 import { getProductById } from '../../apollo/queries';
 import { objectKeysToCamelCase } from '../../utils';
 

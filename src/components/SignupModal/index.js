@@ -20,10 +20,10 @@ const refsSchema = [{
   validator: (checkbox) => promesify(checkbox, 'You must accept the terms and conditions to register'),
 }];
 
-const SignupModal = ({ connectMe }) => {
-  const register = useConnectionDataHandler(connectMe, 'register', 'Identifiers already taken');
+const SignupModal = ({ login }) => {
+  const register = useConnectionDataHandler(login, 'register', 'Identifiers already taken');
   const {
-    refs, handleSubmit, errorMessage, disabled,
+    refs, handleSubmit, errorMessage,
   } = useGeneratedInputRefs(refsSchema, register, { noWhite: true });
 
   return (
@@ -40,13 +40,13 @@ const SignupModal = ({ connectMe }) => {
         <label htmlFor="agree" />
         Accept terms and conditions
       </div>
-      <input className="animated" type="submit" value="Register" onClick={handleSubmit} disabled={disabled} />
+      <input className="animated" type="submit" value="Register" onClick={handleSubmit} disabled={false} />
     </form>
   );
 };
 
 SignupModal.propTypes = {
-  connectMe: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 export default SignupModal;

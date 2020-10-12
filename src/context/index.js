@@ -1,6 +1,6 @@
-import React from 'react';
+import { createContext } from 'react';
 
-const ModalContext = React.createContext();
+const ModalContext = createContext();
+const AuthContext = createContext({});
 
-/* eslint-disable-next-line */
-export { ModalContext };
+export { ModalContext, AuthContext };

@@ -4,8 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 import ProductPageStyle from './style';
 import ProductPromo from '../../ProductPromo';
 import AddButton from '../../AddButton';
+import { useCachedCart } from '../../../ownHooks';
 
 const ProductPage = ({ product }) => {
+  const { loading, updateItemQuantity, getItemQuantity } = useCachedCart();
+
   const {
     id,
     name,
@@ -30,7 +33,13 @@ const ProductPage = ({ product }) => {
         <div className="productDescr">
           {`Le paquet de 500g ${price * 2} € / Kg`}
         </div>
-        <AddButton cName="textCartButtonContainer" productId={id} displayAsText />
+        <AddButton
+          cName="textCartButtonContainer"
+          productId={id}
+          displayAsText
+          quantity={!loading ? getItemQuantity(id) : 0}
+          updateItemQuantity={updateItemQuantity}
+        />
       </div>
       <div className="recommand">@todo: add data</div>
       <div className="infoContainer">

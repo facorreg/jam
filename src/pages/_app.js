@@ -1,7 +1,8 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { useApollo } from '../apollo/apolloClient';
 import App from '../components/pages/App';
+import { useApollo } from '../ownHooks';
+import { AuthProvider } from '../HoC';
 
 function MyApp(props) {
   // eslint-disable-next-line react/prop-types
@@ -10,7 +11,9 @@ function MyApp(props) {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <App {...props} client={apolloClient} />
+      <AuthProvider>
+        <App {...props} />
+      </AuthProvider>
     </ApolloProvider>
   );
 }

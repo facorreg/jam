@@ -19,7 +19,7 @@ const ProductList = () => {
   const [nbProductsToDisplay, setNbProductsToDisplay] = useState(20);
   const products = objectListKeysToCamelCase(data.products ?? [], ['__typename']);
 
-  // use isLoadingMpre to handle onscroll loading div
+  // use isLoadingMore to handle onscroll loading div
   // eslint-disable-next-line no-unused-vars
   const isLoadingMore = useScrollHandler({
     nbProductsToDisplay,
@@ -30,7 +30,7 @@ const ProductList = () => {
   });
 
   if (loading) return <>Loading</>;
-  if (error) { console.log(error); return <>Error</>; }
+  if (error) return <>Error</>;
   if (!products.length) return <>No product to display</>;
 
   const productsToDisplay = products.splice(0, nbProductsToDisplay);

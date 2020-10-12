@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { useRouter } from 'next/router';
 import MenuStyle from './styles';
-import { useMe } from '../../../ownHooks';
+import { useAuth } from '../../../ownHooks';
 import { ModalContext } from '../../../context';
 
 const fakeButtonHandler = () => alert(`
@@ -12,40 +12,51 @@ const fakeButtonHandler = () => alert(`
 `);
 
 const Menu = () => {
-  const { isConnected, connectMe, disconnectMe } = useMe();
+  const {
+    login, logout, isAuthenticated, loading,
+  } = useAuth();
   const router = useRouter();
   const { openModal } = useContext(ModalContext);
   const onClickHandler = (modalName, props) => {
     openModal(modalName, props);
   };
 
-  const modalCompProps = { connectMe };
-  const signup = () => onClickHandler('signup', modalCompProps);
-  const login = () => onClickHandler('login', modalCompProps);
+  const modalCompProps = { login };
+  const signupHandler = () => onClickHandler('signup', modalCompProps);
+  const loginHandler = () => onClickHandler('login', modalCompProps);
+
+  const buttonsSchema = [{
+    elem: (
+      <Fragment key="disconnectedMenu">
+        <button type="button" className="menuButton" onClick={signupHandler}>SIGN UP</button>
+        <button type="button" className="menuButton" onClick={loginHandler}>LOGIN</button>
+      </Fragment>
+    ),
+    skip: isAuthenticated || loading,
+  }, {
+    elem: (
+      <Fragment key="connectedMenu">
+        <button type="button" className="menuButton" onClick={() => router.push('/cart')}>
+          <div className="menuBorder">
+            <img src="/cart2.png" alt="cart" />
+          </div>
+        </button>
+        <button type="button" className="menuButton" onClick={logout}>DISCONNECT</button>
+      </Fragment>
+    ),
+    skip: !isAuthenticated || loading,
+  }, {
+    elem: (
+      <Fragment key="commonMenu">
+        <button type="button" className="menuButton" onClick={fakeButtonHandler}>PROMOTIONS</button>
+        <button type="button" className="menuButton" onClick={fakeButtonHandler}>ABOUT US</button>
+      </Fragment>
+    ),
+  }];
 
   return (
     <MenuStyle id="menu">
-      {
-        !isConnected
-          ? (
-            <>
-              <button type="button" className="menuButton" onClick={signup}>SIGN UP</button>
-              <button type="button" className="menuButton" onClick={login}>LOGIN</button>
-            </>
-          )
-          : (
-            <>
-              <button type="button" className="menuButton" onClick={() => router.push('/cart')}>
-                <div className="menuBorder">
-                  <img src="/cart2.png" alt="cart" />
-                </div>
-              </button>
-              <button type="button" className="menuButton" onClick={disconnectMe}>DISCONNECT</button>
-            </>
-          )
-      }
-      <button type="button" className="menuButton" onClick={fakeButtonHandler}>PROMOTIONS</button>
-      <button type="button" className="menuButton" onClick={fakeButtonHandler}>ABOUT US</button>
+      {buttonsSchema.reduce((elems, { elem, skip }) => (skip ? elems : [...elems, elem]), [])}
     </MenuStyle>
   );
 };

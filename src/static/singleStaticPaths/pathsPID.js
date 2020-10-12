@@ -1,4 +1,4 @@
-import { initializeApollo } from '../../apollo/apolloClient';
+import { initializeApollo } from '../../apollo';
 import { getProducts } from '../../apollo/queries';
 
 const pathsPID = async () => {

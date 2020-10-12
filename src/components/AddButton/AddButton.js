@@ -3,17 +3,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import StyledAddButton from './styles';
-import { useUpdateCartHandler, useMe } from '../../ownHooks';
 
 const AddButton = ({
-  productId, displayAsText, cName,
+  productId, displayAsText, cName, quantity, updateItemQuantity,
 }) => {
-  const { isConnected } = useMe();
-  const [quantity, updateItemQuantity] = useUpdateCartHandler(isConnected, productId);
-
-  // console.log(quantity);
   const updateHandler = async (q) => {
-    await updateItemQuantity(q);
+    await updateItemQuantity(q, productId);
   };
 
   const add = () => updateHandler(quantity + 1);
@@ -76,6 +71,8 @@ AddButton.propTypes = {
   productId: PropTypes.string.isRequired,
   displayAsText: PropTypes.bool,
   cName: PropTypes.string,
+  quantity: PropTypes.number.isRequired,
+  updateItemQuantity: PropTypes.func.isRequired,
 };
 
 export default AddButton;

@@ -29,7 +29,7 @@ const ModalComp = ({ children }) => {
   ));
 
   const [isOpen, setIsOpen] = React.useState(false);
-  const [modalName, setModalName] = React.useState('login');
+  const [modalName, setModalName] = React.useState(null);
   const [modalProps, setModalProps] = React.useState({});
 
   const CurrentModal = modalComponents[modalName];
@@ -62,7 +62,7 @@ const ModalComp = ({ children }) => {
       >
         <StyledModalComp>
           <div className="modalForm">
-            <CurrentModal {...modalProps} />
+            {CurrentModal && <CurrentModal {...modalProps} />}
           </div>
         </StyledModalComp>
       </Modal>

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import ProductPromo from '../ProductPromo';
 import ProductStyle from './styles';
 import AddButton from '../AddButton';
+import { useCachedCart } from '../../ownHooks';
 
 /*
   preload: https://github.com/cyrilwanner/next-optimized-images
@@ -21,6 +22,7 @@ const ProductItem = ({
   },
 }) => {
   const [imgLoaded, setLoadingStatus] = useState(false);
+  const { loading, updateItemQuantity, getItemQuantity } = useCachedCart();
   const onload = () => setLoadingStatus(true);
   const router = useRouter();
   const { medium } = images;
@@ -40,7 +42,12 @@ const ProductItem = ({
           <div className="price">{`${price} €`}</div>
           <div className="priceKg">{`${price * 2} € / kg`}</div>
         </div>
-        <AddButton cName="cartButtonContainer" productId={id} />
+        <AddButton
+          cName="cartButtonContainer"
+          productId={id}
+          quantity={!loading ? getItemQuantity(id) : 0}
+          updateItemQuantity={updateItemQuantity}
+        />
       </div>
     </ProductStyle>
   );

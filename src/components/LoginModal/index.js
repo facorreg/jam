@@ -12,11 +12,12 @@ const refsSchema = [{
   validator: (str) => promesify(str.length, 'Please provide your password to login'),
 }];
 
-const LoginModal = ({ connectMe }) => {
-  const login = useConnectionDataHandler(connectMe, 'login', 'Identifiers or password incorrect');
+const LoginModal = ({ login }) => {
+  const updatedLogin = useConnectionDataHandler(login, 'login', 'Identifiers or password incorrect');
+
   const {
-    refs, handleSubmit, errorMessage, disabled,
-  } = useGeneratedInputRefs(refsSchema, login, { noWhite: true });
+    refs, handleSubmit, errorMessage,
+  } = useGeneratedInputRefs(refsSchema, updatedLogin, { noWhite: true });
 
   return (
     <form>
@@ -26,13 +27,13 @@ const LoginModal = ({ connectMe }) => {
       </div>
       <input name="identifier" placeholder="Username or E-mail" type="text" ref={refs.identifier.ref} />
       <input id="pw" name="password" placeholder="Password" type="password" ref={refs.password.ref} />
-      <input className="animated" type="submit" value="Register" onClick={handleSubmit} disabled={disabled} />
+      <input className="animated" type="submit" value="Register" onClick={handleSubmit} disabled={false} />
     </form>
   );
 };
 
 LoginModal.propTypes = {
-  connectMe: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 export default LoginModal;

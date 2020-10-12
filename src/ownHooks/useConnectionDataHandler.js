@@ -6,7 +6,7 @@ import { promesify } from '../utils';
 import { registerMutation, loginMutation, createCartMutation } from '../apollo/mutations';
 import { getUserById, getCachedCart } from '../apollo/queries';
 import { ModalContext } from '../context';
-import { useApollo } from '../apollo/apolloClient';
+import useApollo from './useApollo';
 
 const createCartIfNotExist = async (client, createCart, id) => {
   /*
@@ -73,7 +73,7 @@ const mutations = {
   login: loginMutation,
 };
 
-const useConnectionDataHandler = (connectMe, field, errorMsg) => {
+const useConnectionDataHandler = (login, field, errorMsg) => {
   const [mutation] = useMutation(mutations[field]);
   const [createCart] = useMutation(createCartMutation);
   const { closeModal } = useContext(ModalContext);
@@ -89,7 +89,7 @@ const useConnectionDataHandler = (connectMe, field, errorMsg) => {
         id: cartId = {},
       } = await createCartIfNotExist(client, createCart, id);
       cacheCartItems(client, items, cartId);
-      connectMe(fieldData);
+      login(fieldData);
       closeModal();
       return res;
     } catch (err) {
