@@ -14,7 +14,11 @@ const useCachedCart = () => {
   const findInCart = (productId) => ({ id: itemProductId }) => itemProductId === productId;
 
   if (!hasBeenSet && !loading && isAuthenticated) {
-    setCart(client.readQuery({ query: getCachedCart }).cart);
+    try {
+      setCart(client.readQuery({ query: getCachedCart }).cart);
+    } catch (err) {
+      /* handle error */
+    }
     setHasBeenSet(true);
   }
 
