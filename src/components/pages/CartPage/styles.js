@@ -8,58 +8,6 @@ const StyledCart = styled.div`
     "cartStep"
     "body";
 
-  .cartStepsContainer, .cartSteps {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cartStepsContainer {
-    grid-area: cartStep;
-
-    .cartSteps {
-      width: 100%;
-
-      .step {
-        width: 25%;
-        height: 60px;
-        position: relative;
-        background: rgb(51, 51, 51);
-        color: white;
-        text-align: center;
-        line-height: 60px;
-      }
-
-      .stepArrow, .stepArrowBorder {
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 30px 0 30px 18px;
-        border-color: transparent transparent transparent #a9aba9;
-        position: absolute;
-        right: -18px;
-      }
-
-      .stepArrow {
-        border-left-color: rgba(51, 51, 51);
-        z-index: 2;
-      }
-
-      .stepArrowBorder {
-        border-left-color: white;
-        z-index: 1;
-      }
-
-      .currStep {
-        background: rgb(95, 95, 95);
-      }
-
-      .currStep .stepArrow  {
-        border-left-color: rgb(95, 95, 95);
-      }
-    }
-  }
-
   .cartBody {
     grid-area: body;
     width: 80%;
@@ -71,73 +19,77 @@ const StyledCart = styled.div`
       "cartItemContainer cartSummary"
       "cartItemContainer .";
     
-    grid-template-rows: 65% 35%;
-  }
-
-  .cartItemContainer {
-    grid-area: cartItemContainer;
-    width: 100%;
-  }
-
-  .cartSummary {
-    grid-area: cartSummary;
-    width: 100%;
-  }
-
-  .cartItem {
-    display: grid;
-    grid-template-areas:
-      "thumbnail ref          ref   price"  
-      "thumbnail .            .     ."
-      "thumbnail name         name  ."
-      "thumbnail .            .     ."
-      "thumbnail addButton    .     ."
-    ;
-    
-    grid-template-columns: 220px auto auto auto;
-    grid-template-rows: 25px 10px 25px auto auto;
+    grid-template-columns: 72% 28%;
     grid-column-gap: 20px;
-    padding: 20px;
-    margin: 10px 0;
-    border: 1px solid black;
-  }
-
-  .thumbnail {
-    height: 180px;
-    grid-area: thumbnail;
-    margin: auto;
-
-    img {
-      height: 100%;
-      width: auto;
-      max-width: 100%;
+  
+    .cartItemContainer {
+      grid-area: cartItemContainer;
+      width: 100%;
     }
-  }
+    
+    .cartItemContainer:first-child div {
+      margin-top: 0px;
+    }
+    
+    .cartSummary {
+      grid-area: cartSummary;
+      max-height: 500px;
+      border: 1px solid black;
+      display: grid;
+      padding: 20px;
 
-  .ref {
-    grid-area: ref;
-    line-height: 25px;
-    font-size: 25px;
-    font-weight: bold;
-  }
+      .title {
+        border-bottom: 1px solid gray;
+        font-weight: bold;
+        letter-spacing: 2px;
+        font-size: 30px;
+        line-height: 30px;
+        padding: 20px 0;
+        text-align: center;
+        vertical-align: middle;
+      }
 
-  .price {
-    grid-area: price;
-    line-height: 25px;
-    font-size: 25px;
-    font-weight: bold;
-    justify-self: end;
-  }
+      .summaryMsg {
+        display: flex;
+        
+        & div {
+          font-size: 20px;
+          line-height: 20px;
+          padding: 20px 0;
+        }
+      
+        & div:last-child {
+          margin-left: auto;
+        }
 
-  .name {
-    grid-area: name;
-    line-height: 25px;
-    font-size: 25px;
-  }
+        border-bottom: 1px solid gray;
+      }
 
-  .addButtonContainer {
-    ${'' /* justify-self: end; */}
-    grid-area: addButton;
+      .summaryMsg:last-of-type {
+        font-weight: bold;
+      }
+
+      .orderBtn {
+        border: 0;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 3px;
+        color: #fff;
+        font-size: 18px;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out;
+        margin-top: 20px;
+        background: rgb(51, 51, 51);
+      }
+
+      .orderBtn:hover {
+        background: rgb(95, 95, 95);
+      }
+    }
   }
 `;
 

@@ -36,7 +36,7 @@ const Menu = () => {
   }, {
     elem: (
       <Fragment key="connectedMenu">
-        <button type="button" className="menuButton" onClick={() => router.push('/cart')}>
+        <button type="button" className="menuButton" onClick={() => router.push('/tunnel/cart')}>
           <div className="menuBorder">
             <img src="/cart2.png" alt="cart" />
           </div>

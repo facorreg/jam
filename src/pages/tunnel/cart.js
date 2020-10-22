@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '../ownHooks';
-import { isServerSide } from '../utils';
-import Cart from '../components/pages/CartPage';
+import { useAuth } from '../../ownHooks';
+import { isServerSide } from '../../utils';
+import Cart from '../../components/pages/CartPage';
 
 const CartPage = () => {
   const { isAuthenticated, loading } = useAuth();

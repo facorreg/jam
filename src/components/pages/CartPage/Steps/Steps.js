@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import StepsStyle from './style';
 
 const Steps = ({ currentStep }) => {
   const steps = ['cart summary', 'address', 'payment'];
@@ -21,18 +22,20 @@ const Steps = ({ currentStep }) => {
   );
 
   return (
-    <div className="cartStepsContainer">
-      <div className="cartSteps">
-        {
-          steps.map((step, i) => (
-            <div className={className(step)}>
-              {arrows(i)}
-              {step}
-            </div>
-          ))
-        }
+    <StepsStyle>
+      <div className="cartStepsContainer">
+        <div className="cartSteps">
+          {
+            steps.map((step, i) => (
+              <div className={className(step)}>
+                {arrows(i)}
+                {step}
+              </div>
+            ))
+          }
+        </div>
       </div>
-    </div>
+    </StepsStyle>
   );
 };
 
