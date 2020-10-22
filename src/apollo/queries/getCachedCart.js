@@ -13,6 +13,7 @@ const getCachedCart = gql`
         description
         quantity
         subId
+        images
       },
       total
     }

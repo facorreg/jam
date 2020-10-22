@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
     };
     getUser();
-  }, []);
+  }, [user]);
 
   const login = (usr) => {
     setCookie('user', usr);
@@ -39,7 +39,6 @@ const AuthProvider = ({ children }) => {
 
   const logout = () => {
     removeCookie('user');
-    console.log('toto');
     client.resetStore();
     setUser(null);
   };

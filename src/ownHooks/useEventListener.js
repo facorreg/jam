@@ -1,7 +1,8 @@
 import { useRef, useEffect } from 'react';
+import { isServerSide } from '../utils';
 
 const useEventListener = (eventName, handler, rawElement) => {
-  if (!rawElement && typeof window === 'undefined') return;
+  if (!rawElement && isServerSide()) return;
 
   const element = rawElement || window;
   // Create a ref that stores handler
@@ -20,7 +21,7 @@ const useEventListener = (eventName, handler, rawElement) => {
       // Make sure element supports addEventListener
       // On
       const isSupported = element && element.addEventListener;
-      if (!isSupported) return () => {};
+      if (!isSupported) return () => { };
 
       // Create event listener that calls handler function stored in ref
       const eventListener = (event) => savedHandler.current(event);

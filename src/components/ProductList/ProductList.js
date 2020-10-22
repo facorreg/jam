@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import ProductListStyle from './styles';
 import { getProducts } from '../../apollo/queries';
-import { objectListKeysToCamelCase } from '../../utils';
+import { isServerSide, objectListKeysToCamelCase } from '../../utils';
 import { useScrollHandler } from '../../ownHooks';
-import ProductItem from '../ProductItem';
+import Product from '../Product';
 
 /*
   @todo: add a loading effect
@@ -19,7 +19,6 @@ const ProductList = () => {
   const [nbProductsToDisplay, setNbProductsToDisplay] = useState(20);
   const products = objectListKeysToCamelCase(data.products ?? [], ['__typename']);
 
-  // use isLoadingMore to handle onscroll loading div
   // eslint-disable-next-line no-unused-vars
   const isLoadingMore = useScrollHandler({
     nbProductsToDisplay,
@@ -37,10 +36,16 @@ const ProductList = () => {
 
   return (
     <>
-      { typeof window !== 'undefined'
+      { !isServerSide()
         ? (
           <ProductListStyle id="productList">
-            {productsToDisplay.map((p) => <ProductItem product={p} key={p.id} />)}
+            {productsToDisplay.map((p) => (
+              <Product
+                product={p}
+                key={p.id}
+                page="ProductList"
+              />
+            ))}
           </ProductListStyle>
         )
         : null}

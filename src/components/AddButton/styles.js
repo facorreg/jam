@@ -27,7 +27,7 @@ const StyledAddButton = styled.div`
     outline: none;
 
     img {
-      height: 80%;
+      height: 100%;
       width: auto;
     }
   }
@@ -43,17 +43,17 @@ const StyledAddButton = styled.div`
       text-align: center;
     }
 
-    div:nth-of-type(2) {
+    div {
       border-left: none;
       border-right: none;
-    }
-
-    div:first-of-type, div:last-of-type {
       background: rgba(95, 95, 95);
       color: white;
-      cursor: pointer;
       font-size: 20px;
       font-weight: bold;
+    }
+
+    button {
+      cursor: pointer;
     }
   }
 `;

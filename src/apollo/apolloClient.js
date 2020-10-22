@@ -2,7 +2,7 @@ import {
   ApolloClient, HttpLink, InMemoryCache, concat, ApolloLink,
 } from '@apollo/client';
 import { concatPagination } from '@apollo/client/utilities';
-import { getCookie } from '../utils';
+import { getCookie, isServerSide } from '../utils';
 
 let apolloClient;
 
@@ -28,7 +28,7 @@ const createApolloClient = () => {
   });
 
   return new ApolloClient({
-    ssrMode: typeof window === 'undefined',
+    ssrMode: isServerSide(),
     link: concat(authMiddleWare, httpLink),
     cache: new InMemoryCache({
       typePolicies: {
@@ -55,7 +55,7 @@ const initializeApollo = (initialState) => {
     client.cache.restore({ ...existingCache, ...initialState });
   }
   // For SSG and SSR always create a new Apollo Client
-  if (typeof window === 'undefined') return client;
+  if (isServerSide()) return client;
   // Create the Apollo Client once in the client
   if (!apolloClient) apolloClient = client;
 

@@ -8,6 +8,7 @@ const parseCartItemToCachedFormat = ({ id: itemId, product, quantity }) => {
     'price',
     'description',
     'subId',
+    'images',
   ];
 
   const cartItem = {

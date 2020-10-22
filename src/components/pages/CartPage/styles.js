@@ -66,37 +66,40 @@ const StyledCart = styled.div`
     margin: auto;
     margin-top: 60px;
 
+    display: grid;
     grid-template-areas:
-      "cartItemContainer cartSummary";
+      "cartItemContainer cartSummary"
+      "cartItemContainer .";
+    
+    grid-template-rows: 65% 35%;
   }
 
   .cartItemContainer {
     grid-area: cartItemContainer;
-    border: 1px solid black;
-
-    width: 60%;
+    width: 100%;
   }
 
   .cartSummary {
     grid-area: cartSummary;
-    width: 40%;
+    width: 100%;
   }
 
   .cartItem {
     display: grid;
     grid-template-areas:
-      ".         .            .     .         ."
-      "thumbnail ref          ref   price     ."  
-      "thumbnail .            .     .         ."
-      "thumbnail name         name  .         ."
-      "thumbnail .            .     .         ."
-      "thumbnail .            .     addButton ."
-      ".         .            .     .         ."
+      "thumbnail ref          ref   price"  
+      "thumbnail .            .     ."
+      "thumbnail name         name  ."
+      "thumbnail .            .     ."
+      "thumbnail addButton    .     ."
     ;
     
-    grid-template-columns: 220px auto auto auto 20px;
-    grid-template-rows: 20px 25px 10px 25px auto auto 20px;
-
+    grid-template-columns: 220px auto auto auto;
+    grid-template-rows: 25px 10px 25px auto auto;
+    grid-column-gap: 20px;
+    padding: 20px;
+    margin: 10px 0;
+    border: 1px solid black;
   }
 
   .thumbnail {
@@ -107,6 +110,7 @@ const StyledCart = styled.div`
     img {
       height: 100%;
       width: auto;
+      max-width: 100%;
     }
   }
 
@@ -122,7 +126,6 @@ const StyledCart = styled.div`
     line-height: 25px;
     font-size: 25px;
     font-weight: bold;
-    padding-right: 20px;
     justify-self: end;
   }
 
@@ -133,7 +136,7 @@ const StyledCart = styled.div`
   }
 
   .addButtonContainer {
-    justify-self: end;
+    ${'' /* justify-self: end; */}
     grid-area: addButton;
   }
 `;

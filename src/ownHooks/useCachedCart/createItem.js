@@ -1,4 +1,3 @@
-import get from 'lodash/get';
 import { parseCartItemToCachedFormat } from './utils';
 
 const createItem = (mutation) => async ({ cart, productId, quantity }) => {
@@ -18,7 +17,7 @@ const createItem = (mutation) => async ({ cart, productId, quantity }) => {
     },
   });
 
-  const { product, ...newItem } = get(createdItemData, 'data.createItem.item', {});
+  const { product, ...newItem } = createdItemData?.data?.createItem?.item || {};
   const toAdd = parseCartItemToCachedFormat({
     id: newItem.id, product, quantity: newItem.quantity,
   });

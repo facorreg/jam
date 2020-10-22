@@ -1,5 +1,3 @@
-import get from 'lodash/get';
-
 const updateItem = (mutation) => async ({ cart, index, quantity }) => {
   const cartItems = [...cart.cartItems];
 
@@ -16,7 +14,7 @@ const updateItem = (mutation) => async ({ cart, index, quantity }) => {
     },
   });
 
-  const updatedItem = get(updatedItemData, 'data.updateItem.item', {});
+  const updatedItem = updatedItemData?.data?.updateItem?.item || {};
   const toUpdate = { ...cartItems.splice(index, 1)[0], quantity: updatedItem.quantity };
   cartItems.splice(index, 0, toUpdate);
 

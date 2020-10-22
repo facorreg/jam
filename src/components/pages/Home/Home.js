@@ -7,7 +7,7 @@ import ProductList from '../../ProductList';
 const Home = (props) => (
   <HomeStyle>
     <Carousel {...props} />
-    <ProductList />
+    <ProductList {...props} />
   </HomeStyle>
 );
 

@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import get from 'lodash/get';
 import pick from 'lodash/pick';
 import { useMutation } from '@apollo/client';
 import { promesify } from '../utils';
@@ -18,7 +17,8 @@ const createCartIfNotExist = async (client, createCart, id) => {
       I may want to have a lighter login / register handler.
   */
   const userData = await client.query({ query: getUserById, variables: { id }, options: { fetchPolicy: 'network-only' } });
-  const cart = get(userData, 'data.user.cart');
+  const cart = userData?.data?.user?.cart;
+  // const cart = userData?.data?.user?.cart;
 
   if (cart) return Promise.resolve(cart);
 
@@ -30,7 +30,7 @@ const createCartIfNotExist = async (client, createCart, id) => {
     },
   });
 
-  return get(cartData, 'data.createCart', {});
+  return cartData?.data?.createCart || {};
 };
 
 const cacheCartItems = (client, items, cartId) => {
@@ -82,7 +82,7 @@ const useConnectionDataHandler = (login, field, errorMsg) => {
   const connectionDataHandler = async (args) => {
     try {
       const res = await mutation(args);
-      const fieldData = get(res, `data.${field}`, {});
+      const fieldData = res?.data[field] || {};
       const { user: { id } } = fieldData;
       const {
         items = [],
