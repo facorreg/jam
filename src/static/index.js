@@ -35,7 +35,6 @@ const resolveProps = (data, options = {}) => Promise.resolve({
 
 const resolvePaths = (data) => {
   const err = extractError(data);
-  console.log(data);
   return Promise.resolve(err ? { paths: [], fallback: true } : { ...data, fallback: true });
 };
 
