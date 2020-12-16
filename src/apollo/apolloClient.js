@@ -2,13 +2,13 @@ import {
   ApolloClient, HttpLink, InMemoryCache, concat, ApolloLink,
 } from '@apollo/client';
 import { concatPagination } from '@apollo/client/utilities';
-import { getCookie, isServerSide } from '../utils';
+import { getCookie, isServerSide, getEnv } from '../utils';
 
 let apolloClient;
 
 const createApolloClient = () => {
   const httpLink = new HttpLink({
-    uri: 'http://localhost:1337/graphql', // Server URL (must be absolute)
+    uri: getEnv('STRAPI_GRAPHQL'), // Server URL (must be absolute)
     // credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
   });
 
