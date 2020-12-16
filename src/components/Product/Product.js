@@ -7,18 +7,21 @@ import ProductImg from './ProductImg';
 import productStyles from './styles';
 import { roundToNthDeci } from '../../utils';
 
-const Product = ({
-  product: {
-    id,
-    name,
-    price,
-    // images,
-    ref,
-    description,
-    promotions,
-  },
-  page,
-}) => {
+const Product = (props) => {
+  if (!props.product) return null;
+
+  const {
+    product: {
+      id,
+      name,
+      price,
+      // images,
+      ref,
+      description,
+      promotions,
+    } = {},
+    page,
+  } = props;
   const [imgLoaded, setLoadingStatus] = useState(false);
   const { isAuthenticated, loading: authLoad } = useAuth();
   const [quantity, setQuantity] = useState(0);
